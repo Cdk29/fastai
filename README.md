@@ -5,16 +5,14 @@ The fastai package provides R wrappers to
 
 The fastai library simplifies training fast and accurate neural nets using
 modern best practices. See the
-[fastai website](https://henry090.github.io/fastai/) to get started. The library
+[fastai website](https://eagerai.github.io/fastai/) to get started. The library
 is based on research into deep learning best practices undertaken at `fast.ai`,
-and includes "out of the box" support for `vision`, `text`, `tabular`,
-[audio](https://github.com/fastaudio/fastaudio),
-[time-series](https://github.com/tcapelle/timeseries_fastai), [object detection](https://github.com/airctic/icevision) and `collab`
+and includes "out of the box" support for `vision`, `text`, `tabular`, and `collab`
 (collaborative filtering) models.
 
 <img src="files/fastai.png" width=200 align=right style="margin-left: 15px;" alt="fastai"/>
 
-[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://www.tidyverse.org/lifecycle/#experimental)
+[![Lifecycle: stable](https://img.shields.io/badge/lifecycle-stable-brightgreen.svg)](https://lifecycle.r-lib.org/articles/stages.html)
 [![CRAN status](https://www.r-pkg.org/badges/version/fastai)](https://CRAN.R-project.org/package=fastai)
 [![Last month downloads](http://cranlogs.r-pkg.org/badges/last-month/fastai?color=green)](https://cran.r-project.org/package=fastai)
 
@@ -27,36 +25,38 @@ and includes "out of the box" support for `vision`, `text`, `tabular`,
 | **Focal**         | ![ubuntu_20](https://github.com/henry090/fastai/workflows/ubuntu_20/badge.svg) |
 | **Mac OS**        | ![mac_os](https://github.com/henry090/fastai/workflows/mac_os/badge.svg)       |
 | **Windows**       | ![windows](https://github.com/henry090/fastai/workflows/windows/badge.svg)     |
-| **Documentation** | ![docs](https://github.com/henry090/fastai/workflows/docs/badge.svg)           |
 
 ## Installation
-
-Requirements:
-
-- Python >= 3.6
-- CPU or GPU
 
 **1. Install miniconda and activate environment:**
 
 ```
 reticulate::install_miniconda()
-reticulate::py_config()
+reticulate::conda_create('r-reticulate')
 ```
 
 **2. The dev version:**
 
 ```
-devtools::install_github('henry090/fastai')
+devtools::install_github('eagerai/fastai')
 ```
 
 **3. Later, you need to install the python module `fastai`:**
 
 ```
-install_fastai(gpu = FALSE, cuda_version = '10.1', overwrite = FALSE)
+fastai::install_fastai(gpu = FALSE, cuda_version = '10.1', overwrite = FALSE)
 ```
 
 
 **4. Restart RStudio!**
+
+## fast.ai extensions:
+
+1. [NLP, Transformers](https://github.com/ohmeow/blurr)
+2. [Object Detection](https://github.com/airctic/icevision)
+3. [Time-series](https://github.com/tcapelle/timeseries_fastai)
+4. [CycleGAN](https://github.com/tmabraham/UPIT)
+5. [Audio](https://github.com/fastaudio/fastaudio)
 
 ## Kaggle
 
@@ -67,6 +67,7 @@ We currently prepare the examples of usage of the fastai from R in Kaggle compet
 - [NLP Binary Classification](https://www.kaggle.com/henry090/r-fastai-and-transformers)
 - [Audio classification](https://www.kaggle.com/henry090/fast-ai-from-r)
 - [CycleGAN](https://www.kaggle.com/henry090/r-fast-ai-and-cyclegan)
+- [Fastai on Colab TPUs](https://colab.research.google.com/drive/1PiBECDM552No-5apVIB8LqUSdSqqJSi-?usp=sharing)
 
 > Contributions are very welcome! 
 
@@ -428,7 +429,7 @@ learn %>% fit(2)
 [Computer Vision models](https://github.com/rwightman/pytorch-image-models)?**
 
 There is a function in fastai `timm_learner` which originally written by
-[Zachary Mueller](https://github.com/walkwithfastai/walkwithfastai.github.io/blob/master/02_vision.external.timm.ipynb).
+[Zachary Mueller](https://github.com/walkwithfastai/walkwithfastai.github.io/).
 It helps to quickly load the pretrained models from
 [timm library](https://github.com/rwightman/pytorch-image-models).
 
@@ -2034,6 +2035,117 @@ Sequential(
   (my_conv4): Conv2d(1, 20, kernel_size=(5, 5), stride=(1, 1))
 )
 ```
+
+## Icevision
+
+Icevision module has a great set of tools for object detection tasks:
+
+```
+library(fastai)
+library(magrittr)
+
+# get file
+url = "https://cvbp.blob.core.windows.net/public/datasets/object_detection/odFridgeObjects.zip"
+download.file(url,destfile = odFridgeObjects.zip)
+
+# Parser
+class_map = icevision_ClassMap(c("milk_bottle", "carton", "can", "water_bottle"))
+parser = parsers_voc(annotations_dir= "odFridgeObjects/annotations/",
+                     images_dir= "odFridgeObjects/images",
+                     class_map=class_map)
+records = parser$parse()
+
+# Records
+train_records = records[[1]]
+valid_records = records[[2]]
+
+# Transforms
+train_tfms = icevision_Adapter(list(icevision_aug_tfms(size=384, presize=512),
+                               icevision_Normalize()))
+valid_tfms = icevision_Adapter(list(icevision_resize_and_pad(384),icevision_Normalize()))
+
+# Datasets
+train_ds = icevision_Dataset(train_records, train_tfms)
+valid_ds = icevision_Dataset(valid_records, valid_tfms)
+
+# See batch
+
+train_ds %>% show_samples(idx=c(5,10,20,50,100,99), class_map=class_map,
+                          denormalize_fn=denormalize_imagenet(),ncols = 3)
+
+```
+
+<p align="center">
+<img src="files/fridge.jpg" height=300 align=center alt="Detection"/>
+</p>
+
+Next, we create data loader and fastai training:
+
+```
+# DataLoaders
+train_dl = efficientdet_train_dl(train_ds, batch_size=16, num_workers=4, shuffle=T)
+valid_dl = efficientdet_valid_dl(valid_ds, batch_size=16, num_workers=4, shuffle=F)
+
+# Model and Metrics
+model = efficientdet_model(model_name="tf_efficientdet_lite0", num_classes=5, img_size=384)
+metrics = list(COCOMetric())
+
+# Training using Fastai
+learn = efficientdet_learner(dls=list(train_dl, valid_dl), model=model, metrics=metrics)
+res = learn %>% fine_tune(10, 1e-2, freeze_epochs=10)
+```
+
+```
+epoch   train_loss   valid_loss   COCOMetric   time  
+------  -----------  -----------  -----------  ------
+0       1.711512     1.264311     0.001845     00:05 
+1       1.568228     1.247132     0.009066     00:03 
+2       1.496242     1.222866     0.010658     00:03 
+3       1.433081     1.137174     0.030878     00:03 
+4       1.349961     1.060559     0.114889     00:03 
+5       1.260490     0.937396     0.180179     00:03 
+6       1.169536     0.998160     0.174759     00:04 
+7       1.097816     0.929107     0.208315     00:03 
+8       1.042755     0.821408     0.230876     00:03 
+9       0.987962     0.840447     0.297297     00:03 
+epoch   train_loss   valid_loss   COCOMetric   time  
+------  -----------  -----------  -----------  ------
+0       0.629509     0.715716     0.325585     00:04 
+1       0.599518     0.684150     0.382239     00:03 
+2       0.585920     0.631303     0.480204     00:04 
+3       0.554550     0.615111     0.516641     00:04 
+4       0.539868     0.622383     0.459974     00:04 
+5       0.521756     0.609013     0.556388     00:04 
+6       0.498118     0.491549     0.611895     00:04 
+7       0.477656     0.469396     0.685497     00:04 
+8       0.459495     0.407668     0.713956     00:04 
+9       0.446206     0.383890     0.729540     00:04 
+```
+
+Predictions:
+
+```
+# Inference
+# DataLoader
+infer_dl = efficientdet_infer_dl(valid_ds, batch_size=8)
+# Predict
+res <- efficientdet_predict_dl(model, infer_dl)
+
+show_preds(
+  res,
+  c(10,20,25,12,16),
+  class_map=class_map,
+  denormalize_fn=denormalize_imagenet(),
+  ncols=5,
+  figsize=c(19,10)
+)
+```
+
+<p align="center">
+<img src="files/output.jpg" height=300 align=center alt="Detection"/>
+</p>
+
+
 
 ## Kaggle
 

@@ -71,8 +71,8 @@ is_rmarkdown = function() {
 #'
 #' @export
 show_batch <- function(dls, b = NULL, max_n = 9, ctxs = NULL,
-                       figsize = c(19.2,10.8),
-                       show = TRUE, unique = FALSE, dpi = 90, ...) {
+                       figsize = c(6,6),
+                       show = TRUE, unique = FALSE, dpi = 120, ...) {
 
   fastai2$vision$all$plt$close()
 
@@ -157,8 +157,8 @@ ClassificationInterpretation_from_learner <- function(learn, ds_idx = 1, dl = NU
 #' }
 #'
 #' @export
-plot_top_losses <- function(interp, k, largest = TRUE, figsize = c(19.2,10.8),
-                            ..., dpi = NULL) {
+plot_top_losses <- function(interp, k, largest = TRUE, figsize = c(7,5),
+                            ..., dpi = 90) {
 
   fastai2$vision$all$plt$close()
   interp$plot_top_losses(
@@ -211,8 +211,8 @@ plot_top_losses <- function(interp, k, largest = TRUE, figsize = c(19.2,10.8),
 #' @export
 plot_confusion_matrix <- function(interp, normalize = FALSE, title = "Confusion matrix",
                                   cmap = "Blues", norm_dec = 2, plot_txt = TRUE,
-                                  figsize = c(19.2,10.8),
-                                  ..., dpi = 250) {
+                                  figsize = c(4,4),
+                                  ..., dpi = 120) {
 
   fastai2$vision$all$plt$close()
   interp$plot_confusion_matrix(
@@ -333,12 +333,16 @@ most_confused <- function(interp, min_val = 1) {
 #' @export
 subplots <- function(nrows = 2, ncols = 2, figsize = NULL, imsize = 4) {
   fastai2$vision$all$plt$close()
+
   args <- list(
     nrows = as.integer(nrows),
     ncols = as.integer(ncols),
     figsize = figsize,
     imsize = as.integer(imsize)
   )
+
+  if(is.null(args$figsize))
+    args$figsize <- NULL
 
   do.call(fastai2$medical$imaging$subplots, args)
 
@@ -427,7 +431,15 @@ show_images <- function(ims, nrows = 1, ncols = NULL,
 
   if(!is.null(ncols)) {
     args$ncols = as.integer(args$ncols)
+  } else {
+    args$ncols <- NULL
   }
+
+  if(is.null(args$titles))
+    args$titles <- NULL
+
+  if(is.null(args$figsize))
+    args$figsize <- NULL
 
 
   do.call(medical()$show_images, args)
@@ -498,6 +510,9 @@ show_results <- function(object, ds_idx = 1, dl = NULL, max_n = 9, shuffle = TRU
     shuffle = shuffle,
     ...
   )
+
+  if(is.null(args$dl))
+    args$dl <- NULL
 
   if(!is.null(args[['vmin']])) {
     args[['vmin']] = as.integer(args[['vmin']])

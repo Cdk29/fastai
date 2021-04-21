@@ -9,9 +9,8 @@ install_fastai(
   gpu = FALSE,
   cuda_version = "10.1",
   overwrite = FALSE,
-  extra_pkgs = c("kaggle", "transformers", "pytorch_lightning", "timm", "catalyst",
-    "ignite", "fastinference[interp]", "shap", "blurr", "icevision[all]"),
-  skip_git_pkgs = FALSE
+  extra_pkgs = c("timm", "fastinference[interp]"),
+  TPU = FALSE
 )
 }
 \arguments{
@@ -25,7 +24,7 @@ install_fastai(
 
 \item{extra_pkgs}{character vector of additional packages}
 
-\item{skip_git_pkgs}{skip installation from Github}
+\item{TPU}{official way to install Pytorch-XLA 1.7}
 }
 \value{
 None

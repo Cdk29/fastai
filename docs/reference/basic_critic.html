@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastai</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
       </span>
     </div>
 
@@ -175,6 +175,9 @@
     <li>
       <a href="../articles/low.html">Low-level API</a>
     </li>
+    <li>
+      <a href="../articles/bayes_opt.html">Bayesian Optimization</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -207,7 +210,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/henry090/fastai/">
+  <a href="https://github.com/EagerAI/fastai/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -232,7 +235,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Basic critic</h1>
-    <small class="dont-index">Source: <a href='https://github.com/henry090/fastai/blob/master/R/GAN.R'><code>R/GAN.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/EagerAI/fastai/blob/master/R/GAN.R'><code>R/GAN.R</code></a></small>
     <div class="hidden name"><code>basic_critic.Rd</code></div>
     </div>
 
@@ -267,7 +270,7 @@
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 
 <span class='va'>critic</span>    <span class='op'>=</span> <span class='fu'>basic_critic</span><span class='op'>(</span>in_size <span class='op'>=</span> <span class='fl'>64</span>, n_channels <span class='op'>=</span> <span class='fl'>3</span>, n_extra_layers <span class='op'>=</span> <span class='fl'>1</span>,
-                        act_cls <span class='op'>=</span> <span class='fu'><a href='partial.html'>partial</a></span><span class='op'>(</span><span class='va'>nn</span><span class='op'>$</span><span class='va'>LeakyReLU</span>, negative_slope <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span>
+                        act_cls <span class='op'>=</span> <span class='fu'><a href='partial.html'>partial</a></span><span class='op'>(</span><span class='fu'><a href='nn.html'>nn</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>LeakyReLU</span>, negative_slope <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span><span class='op'>)</span>
 
 <span class='op'>}</span>
 

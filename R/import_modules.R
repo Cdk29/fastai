@@ -15,6 +15,13 @@ python_path <- function() {
 #' @return None
 Module_test <- function() try(reticulate::import_from_path('fastaibuilt', path = python_path())$Module_test, TRUE)
 
+#' @title Loss NN module
+#'
+#'
+#'
+#' @return None
+custom_loss <- function() try(reticulate::import_from_path('fastaibuilt', path = python_path())$custom_loss, TRUE)
+
 #' @title Bs finder
 #'
 #'
@@ -32,6 +39,10 @@ load_pre_models <- function() try(reticulate::import_from_path('fastaibuilt',
                                                                path = python_path())$pretrained_timm_models, TRUE)
 
 
+#' @title XLA
+#'
+#' @return None
+xla <- function() try(reticulate::import("fastai_xla_extensions.core"),TRUE)
 
 
 #' @title Timm module
@@ -53,7 +64,7 @@ crap <- function() try(reticulate::import_from_path('fastaibuilt', path = python
 #' @title Icevision module
 #'
 #' @return None
-icevision <- function() try(reticulate::import("icevision"), TRUE)
+icevision <- function() try(reticulate::import("icevision.all", convert = TRUE), TRUE)
 
 #' @title Ignite module
 #'

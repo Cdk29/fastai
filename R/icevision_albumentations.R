@@ -46,6 +46,9 @@ icevision_aug_tfms <- function(size, presize = NULL,
     pad = pad
   )
 
+  if(!is.null(args$presize))
+    args$presize <- as.integer(args$presize)
+
   do.call(icevision()$tfms$albumentations$aug_tfms, args)
 
 }
@@ -366,7 +369,14 @@ icevision_PadIfNeeded <- function(min_height = 1024, min_width = 1024, pad_heigh
 #' @export
 icevision_Adapter <- function(tfms) {
 
-  icevision()$tfms$albumentations$Adapter(
+  tfms_ = tfms
+  tfms = list()
+
+  for (i in 1:length(tfms_)) {
+    tfms = append(tfms, tfms_[[i]])
+  }
+
+  icevision()$tfms$A$Adapter(
     tfms = tfms
   )
 
@@ -2952,7 +2962,22 @@ icevision_VerticalFlip <- function(always_apply = FALSE, p = 0.5) {
 }
 
 
+#' @title Resize_and_pad
+#'
+#'
+#' @param size size
+#' @param pad pad
+#' @return None
+#' @export
+icevision_resize_and_pad <- function(size,
+                                     pad = partial(icevision_PadIfNeeded, border_mode=0, value=c(124L, 116L, 104L))) {
 
+  icevision()$tfms$albumentations$resize_and_pad(
+    size = as.integer(size),
+    pad = pad
+  )
+
+}
 
 
 

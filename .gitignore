@@ -35,4 +35,7 @@ h2z-preds/
 ^.*__pycache__$
 imdb_sample/
 adult_sample/
-
+odFridgeObjects/
+mnist.pkl
+mnist.pkl.gz
+opt.py

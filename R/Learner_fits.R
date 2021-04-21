@@ -1,4 +1,21 @@
 
+#' @title Load_learner
+#'
+#' @description Load a `Learner` object in `fname`, optionally putting it on the `cpu`
+#'
+#'
+#' @param fname fname
+#' @param cpu cpu or not
+#' @return learner object
+#' @export
+load_learner <- function(fname, cpu = TRUE) {
+
+  fastai2$learner$load_learner(
+    fname = fname,
+    cpu = cpu
+  )
+
+}
 
 
 
@@ -34,6 +51,15 @@ fit_flat_lin <- function(object, n_epochs = 100, n_epochs_decay = 100,
     cbs = cbs,
     reset_opt = reset_opt
   )
+
+  if(is.null(args$start_lr))
+    args$start_lr <- NULL
+
+  if(is.null(args$wd))
+    args$wd <- NULL
+
+  if(is.null(args$cbs))
+    args$cbs <- NULL
 
   do.call(object$fit_flat_lin, args)
   if (length(length(object$recorder$values))==1) {
@@ -87,6 +113,15 @@ fit_flat_cos = function(object, n_epoch, lr=NULL, div_final=100000.0,
     cbs = cbs,
     reset_opt = reset_opt
   )
+
+  if(is.null(args$lr))
+    args$lr <- NULL
+
+  if(is.null(args$wd))
+    args$wd <- NULL
+
+  if(is.null(args$cbs))
+    args$cbs <- NULL
 
   do.call(object$fit_flat_cos, args)
 
@@ -143,6 +178,15 @@ fit_sgdr = function(object, n_cycles, cycle_len, lr_max=NULL,
     reset_opt = reset_opt,
     wd = wd
   )
+
+  if(is.null(args$lr_max))
+    args$lr_max <- NULL
+
+  if(is.null(args$wd))
+    args$wd <- NULL
+
+  if(is.null(args$cbs))
+    args$cbs <- NULL
 
   do.call(object$fit_sgdr, args)
 
@@ -226,6 +270,29 @@ fine_tune <- function(object, epochs, base_lr = 0.002, freeze_epochs = 1,
   invisible(history)
 
 }
+
+#' @title Learn to XLA
+#' @description Distribute the training across TPUs
+#' @param object learner / model
+#' @return None
+#' @export
+to_xla <- function(object) {
+  object$to_xla()
+}
+
+#' @title An environment supporting TPUs
+#' @param text string to pass to environment
+#' @return None
+#' @export
+os_environ_tpu <- function(text = 'COLAB_TPU_ADDR') {
+  xla()
+  result = glue::glue('
+import os
+assert os.environ["{text}"]')
+  reticulate::py_run_string(result)
+}
+
+
 
 
 

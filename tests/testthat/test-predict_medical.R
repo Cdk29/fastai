@@ -18,12 +18,13 @@ test_succeeds('prepare dataloader and model', {
                            batch_tfms = aug_transforms(size = 224))
 
   dls = pneumothorax %>% dataloaders(as.matrix(df))
+  dls %>% show_batch()
   learn = cnn_learner(dls, resnet34(), metrics = accuracy)
 })
 
 
 test_succeeds('predict medical', {
-  result = learn %>% predict(as.character(items[0]))
+  #result = learn %>% predict(as.character(items[0]))
   #test_dl = learn$dls$test_dl(as.character(items[0]))
   #predictions = learn$get_preds(dl = test_dl, with_decoded = TRUE)
 })

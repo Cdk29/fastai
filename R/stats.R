@@ -95,8 +95,14 @@ lr_find <- function(object, start_lr = 1e-07, end_lr = 10, num_it = 100,
   print(do.call(object$lr_find, args))
 
   losses = object$recorder$losses
-  losses = unlist(lapply(1:length(losses),function(x) losses[[x]]$numpy()))
+  losses = unlist(lapply(1:length(losses),function(x) as_array(losses[[x]])))
   lrs = object$recorder$lrs
+
+  if(inherits(lrs,"numpy.ndarray"))
+    lrs <- reticulate::py_to_r(lrs)
+
+  if(inherits(losses,"numpy.ndarray"))
+    losses <- reticulate::py_to_r(losses)
 
   lrs = data.frame(lr_rates = lrs,
              losses = losses)

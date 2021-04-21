@@ -1,11 +1,12 @@
-pandoc: 2.7.3
+pandoc: 2.11.2
 pkgdown: 1.6.1
 pkgdown_sha: ~
 articles:
+  Basic_Tabular: Basic_Tabular.html
   audio: audio.html
   audio2tf: audio2tf.html
   basic_img_class: basic_img_class.html
-  Basic_Tabular: Basic_Tabular.html
+  bayes_opt: bayes_opt.html
   callbacks: callbacks.html
   catalyst: catalyst.html
   custom_img: custom_img.html
@@ -25,8 +26,8 @@ articles:
   textclassification: textclassification.html
   textsummarize: textsummarize.html
   time_series: time_series.html
-last_built: 2020-12-27T15:29Z
+last_built: 2021-04-17T12:37Z
 urls:
-  reference: https://henry090.github.io/fastai//reference
-  article: https://henry090.github.io/fastai//articles
+  reference: https://EagerAI.github.io/fastai//reference
+  article: https://EagerAI.github.io/fastai//articles
 

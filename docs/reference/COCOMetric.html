@@ -78,7 +78,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">fastai</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
       </span>
     </div>
 
@@ -175,6 +175,9 @@
     <li>
       <a href="../articles/low.html">Low-level API</a>
     </li>
+    <li>
+      <a href="../articles/bayes_opt.html">Bayesian Optimization</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -207,7 +210,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/henry090/fastai/">
+  <a href="https://github.com/EagerAI/fastai/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -232,7 +235,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>COCOMetric</h1>
-    <small class="dont-index">Source: <a href='https://github.com/henry090/fastai/blob/master/R/icevision_metrics.R'><code>R/icevision_metrics.R</code></a></small>
+    <small class="dont-index">Source: <a href='https://github.com/EagerAI/fastai/blob/master/R/icevision_metrics.R'><code>R/icevision_metrics.R</code></a></small>
     <div class="hidden name"><code>COCOMetric.Rd</code></div>
     </div>
 
@@ -240,7 +243,11 @@
     <p>Wrapper around [cocoapi evaluator](https://github.com/cocodataset/cocoapi)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>COCOMetric</span><span class='op'>(</span>metric_type <span class='op'>=</span> <span class='st'>"bbox"</span>, print_summary <span class='op'>=</span> <span class='cn'>FALSE</span>, show_pbar <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></pre>
+    <pre class="usage"><span class='fu'>COCOMetric</span><span class='op'>(</span>
+  metric_type <span class='op'>=</span> <span class='fu'><a href='COCOMetricType.html'>COCOMetricType</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>$</span><span class='va'>bbox</span>,
+  print_summary <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  show_pbar <span class='op'>=</span> <span class='cn'>FALSE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

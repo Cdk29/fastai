@@ -39,7 +39,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="index.html">fastai</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.0.7</span>
       </span>
     </div>
 
@@ -136,6 +136,9 @@
     <li>
       <a href="articles/low.html">Low-level API</a>
     </li>
+    <li>
+      <a href="articles/bayes_opt.html">Bayesian Optimization</a>
+    </li>
   </ul>
 </li>
 <li class="dropdown">
@@ -168,7 +171,7 @@
       </ul>
 <ul class="nav navbar-nav navbar-right">
 <li>
-  <a href="https://github.com/henry090/fastai/">
+  <a href="https://github.com/EagerAI/fastai/">
     <span class="fab fa-github fa-lg"></span>
      
   </a>
@@ -196,9 +199,9 @@
 <h2 class="hasAnchor">
 <a href="#r-interface-to-fastai" class="anchor"></a>R interface to fastai</h2>
 <p>The fastai package provides R wrappers to <a href="https://github.com/fastai/fastai">fastai</a>.</p>
-<p>The fastai library simplifies training fast and accurate neural nets using modern best practices. See the <a href="https://henry090.github.io/fastai/">fastai website</a> to get started. The library is based on research into deep learning best practices undertaken at <code>fast.ai</code>, and includes “out of the box” support for <code>vision</code>, <code>text</code>, <code>tabular</code>, <a href="https://github.com/fastaudio/fastaudio">audio</a>, <a href="https://github.com/tcapelle/timeseries_fastai">time-series</a>, <a href="https://github.com/airctic/icevision">object detection</a> and <code>collab</code> (collaborative filtering) models.</p>
+<p>The fastai library simplifies training fast and accurate neural nets using modern best practices. See the <a href="https://eagerai.github.io/fastai/">fastai website</a> to get started. The library is based on research into deep learning best practices undertaken at <code>fast.ai</code>, and includes “out of the box” support for <code>vision</code>, <code>text</code>, <code>tabular</code>, and <code>collab</code> (collaborative filtering) models.</p>
 <p><img src="files/fastai.png" width="200" align="right" style="margin-left: 15px;" alt="fastai"></p>
-<p><a href="https://www.tidyverse.org/lifecycle/#experimental"><img src="https://img.shields.io/badge/lifecycle-experimental-orange.svg" alt="Lifecycle: experimental"></a> <a href="https://CRAN.R-project.org/package=fastai"><img src="https://www.r-pkg.org/badges/version/fastai" alt="CRAN status"></a> <a href="https://cran.r-project.org/package=fastai"><img src="http://cranlogs.r-pkg.org/badges/last-month/fastai?color=green" alt="Last month downloads"></a></p>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html"><img src="https://img.shields.io/badge/lifecycle-stable-brightgreen.svg" alt="Lifecycle: stable"></a> <a href="https://CRAN.R-project.org/package=fastai"><img src="https://www.r-pkg.org/badges/version/fastai" alt="CRAN status"></a> <a href="https://cran.r-project.org/package=fastai"><img src="http://cranlogs.r-pkg.org/badges/last-month/fastai?color=green" alt="Last month downloads"></a></p>
 </div>
 <div id="continuous-build-status" class="section level2">
 <h2 class="hasAnchor">
@@ -229,29 +232,31 @@
 <td><strong>Windows</strong></td>
 <td><img src="https://github.com/henry090/fastai/workflows/windows/badge.svg" alt="windows"></td>
 </tr>
-<tr class="even">
-<td><strong>Documentation</strong></td>
-<td><img src="https://github.com/henry090/fastai/workflows/docs/badge.svg" alt="docs"></td>
-</tr>
 </tbody>
 </table>
 </div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
-<p>Requirements:</p>
-<ul>
-<li>Python &gt;= 3.6</li>
-<li>CPU or GPU</li>
-</ul>
 <p><strong>1. Install miniconda and activate environment:</strong></p>
 <pre><code><a href="https://rdrr.io/pkg/reticulate/man/install_miniconda.html">reticulate::install_miniconda()
-reticulate::py_config()</a></code></pre>
+reticulate::conda_create('r-reticulate')</a></code></pre>
 <p><strong>2. The dev version:</strong></p>
-<pre><code>devtools::install_github('henry090/fastai')</code></pre>
+<pre><code><a href="https://devtools.r-lib.org//reference/remote-reexports.html">devtools::install_github('eagerai/fastai')</a></code></pre>
 <p><strong>3. Later, you need to install the python module <code>fastai</code>:</strong></p>
-<pre><code><a href="reference/install_fastai.html">install_fastai(gpu = FALSE, cuda_version = '10.1', overwrite = FALSE)</a></code></pre>
+<pre><code><a href="reference/install_fastai.html">fastai::install_fastai(gpu = FALSE, cuda_version = '10.1', overwrite = FALSE)</a></code></pre>
 <p><strong>4. Restart RStudio!</strong></p>
+</div>
+<div id="fastai-extensions" class="section level2">
+<h2 class="hasAnchor">
+<a href="#fastai-extensions" class="anchor"></a>fast.ai extensions:</h2>
+<ol>
+<li><a href="https://github.com/ohmeow/blurr">NLP, Transformers</a></li>
+<li><a href="https://github.com/airctic/icevision">Object Detection</a></li>
+<li><a href="https://github.com/tcapelle/timeseries_fastai">Time-series</a></li>
+<li><a href="https://github.com/tmabraham/UPIT">CycleGAN</a></li>
+<li><a href="https://github.com/fastaudio/fastaudio">Audio</a></li>
+</ol>
 </div>
 <div id="kaggle" class="section level2">
 <h2 class="hasAnchor">
@@ -263,6 +268,7 @@ reticulate::py_config()</a></code></pre>
 <li><a href="https://www.kaggle.com/henry090/r-fastai-and-transformers">NLP Binary Classification</a></li>
 <li><a href="https://www.kaggle.com/henry090/fast-ai-from-r">Audio classification</a></li>
 <li><a href="https://www.kaggle.com/henry090/r-fast-ai-and-cyclegan">CycleGAN</a></li>
+<li><a href="https://colab.research.google.com/drive/1PiBECDM552No-5apVIB8LqUSdSqqJSi-?usp=sharing">Fastai on Colab TPUs</a></li>
 </ul>
 <blockquote>
 <p>Contributions are very welcome!</p>
@@ -482,7 +488,7 @@ learn = cnn_learner(data, resnet18(), metrics = accuracy)
 learn %&gt;% fit(2)</a></code></pre>
 <p><img src="files/mnist.png" height="500" align="center" alt="Mnist"></p>
 <p><strong>What about the implementation of the latest <a href="https://github.com/rwightman/pytorch-image-models">Computer Vision models</a>?</strong></p>
-<p>There is a function in fastai <code>timm_learner</code> which originally written by <a href="https://github.com/walkwithfastai/walkwithfastai.github.io/blob/master/02_vision.external.timm.ipynb">Zachary Mueller</a>. It helps to quickly load the pretrained models from <a href="https://github.com/rwightman/pytorch-image-models">timm library</a>.</p>
+<p>There is a function in fastai <code>timm_learner</code> which originally written by <a href="https://github.com/walkwithfastai/walkwithfastai.github.io/">Zachary Mueller</a>. It helps to quickly load the pretrained models from <a href="https://github.com/rwightman/pytorch-image-models">timm library</a>.</p>
 <p>First, lets’s see the list of available models (TOP 10):</p>
 <pre><code>&gt; str(as.list(timm_list_models()[1:10]))
 List of 10
@@ -518,7 +524,9 @@ dls = ImageDataLoaders_from_name_re(
 learn = timm_learner(dls, 'cspdarknet53', metrics = list(accuracy, error_rate))
 
 learn %&gt;% summary()</a></code></pre>
-<details><summary>Model summary</summary><p>
+<details><summary>
+Model summary
+</summary><p>
 </p>
 <pre><code>Sequential (Input shape: ['10 x 3 x 224 x 224'])
 ================================================================
@@ -924,7 +932,7 @@ learn %&gt;% show_results()</code></pre>
 <h2 class="hasAnchor">
 <a href="#unet-example" class="anchor"></a>Unet example</h2>
 <p>Call libraries:</p>
-<pre><code><a href="https://github.com/henry090/fastai">library(fastai)
+<pre><code><a href="https://github.com/EagerAI/fastai">library(fastai)
 library(magrittr)</a></code></pre>
 <p>Get data</p>
 <pre><code><a href="reference/URLs_CAMVID.html">URLs_CAMVID()</a></code></pre>
@@ -1008,7 +1016,9 @@ List of 32
 }
 
 attr(acc_camvid, "py_function_name") &lt;- 'acc_camvid'</code></pre>
-<details><summary>Debug acc_camvid manually</summary><p>
+<details><summary>
+Debug acc_camvid manually
+</summary><p>
 </p>
 <pre><code>batch = dls %&gt;% one_batch(convert = FALSE)</code></pre>
 <pre><code>[[1]]
@@ -1536,7 +1546,7 @@ ggpubr::ggarrange(p_[[1]], p_[[2]], p_[[3]], p_[[4]], labels = types)</code></pr
 <p align="center">
 <img src="files/dcm.png" height="500" align="center" alt="dicom"></p>
 <p>Let’s try a relatively complex example:</p>
-<pre><code><a href="http://ggplot2.tidyverse.org">library(ggplot2)
+<pre><code><a href="https://ggplot2.tidyverse.org">library(ggplot2)
 
 # crop parameters
 img = dcmread('hemorrhage.dcm')
@@ -1613,7 +1623,7 @@ data
 5 0.0000002089296 5.043181
 6 0.0000002511886 5.023340</code></pre>
 <p>Visualize:</p>
-<pre><code>highcharter::hchart(data, "line", highcharter::hcaes(y = losses, x = lr_rates ))</code></pre>
+<pre><code><a href="http://jkunst.com/highcharter/reference/hchart.html">highcharter::hchart(data, "line", highcharter::hcaes(y = losses, x = lr_rates ))</a></code></pre>
 <p align="center">
 <img src="files/lr.png" height="500" align="center" alt="Learning_rates"></p>
 </div>
@@ -1776,6 +1786,98 @@ coco_tdl %&gt;% show_batch(dpi = 200)</code></pre>
 )</code></pre>
 </div>
 </div>
+<div id="icevision" class="section level2">
+<h2 class="hasAnchor">
+<a href="#icevision" class="anchor"></a>Icevision</h2>
+<p>Icevision module has a great set of tools for object detection tasks:</p>
+<pre><code><a href="https://github.com/EagerAI/fastai">library(fastai)
+library(magrittr)
+
+# get file
+url = "https://cvbp.blob.core.windows.net/public/datasets/object_detection/odFridgeObjects.zip"
+download.file(url,destfile = odFridgeObjects.zip)
+
+# Parser
+class_map = icevision_ClassMap(c("milk_bottle", "carton", "can", "water_bottle"))
+parser = parsers_voc(annotations_dir= "odFridgeObjects/annotations/",
+                     images_dir= "odFridgeObjects/images",
+                     class_map=class_map)
+records = parser$parse()
+
+# Records
+train_records = records[[1]]
+valid_records = records[[2]]
+
+# Transforms
+train_tfms = icevision_Adapter(list(icevision_aug_tfms(size=384, presize=512),
+                               icevision_Normalize()))
+valid_tfms = icevision_Adapter(list(icevision_resize_and_pad(384),icevision_Normalize()))
+
+# Datasets
+train_ds = icevision_Dataset(train_records, train_tfms)
+valid_ds = icevision_Dataset(valid_records, valid_tfms)
+
+# See batch
+
+train_ds %&gt;% show_samples(idx=c(5,10,20,50,100,99), class_map=class_map,
+                          denormalize_fn=denormalize_imagenet(),ncols = 3)
+</a></code></pre>
+<p align="center">
+<img src="files/fridge.jpg" height="300" align="center" alt="Detection"></p>
+<p>Next, we create data loader and fastai training:</p>
+<pre><code># DataLoaders
+train_dl = efficientdet_train_dl(train_ds, batch_size=16, num_workers=4, shuffle=T)
+valid_dl = efficientdet_valid_dl(valid_ds, batch_size=16, num_workers=4, shuffle=F)
+
+# Model and Metrics
+model = efficientdet_model(model_name="tf_efficientdet_lite0", num_classes=5, img_size=384)
+metrics = list(COCOMetric())
+
+# Training using Fastai
+learn = efficientdet_learner(dls=list(train_dl, valid_dl), model=model, metrics=metrics)
+res = learn %&gt;% fine_tune(10, 1e-2, freeze_epochs=10)</code></pre>
+<pre><code>epoch   train_loss   valid_loss   COCOMetric   time  
+------  -----------  -----------  -----------  ------
+0       1.711512     1.264311     0.001845     00:05 
+1       1.568228     1.247132     0.009066     00:03 
+2       1.496242     1.222866     0.010658     00:03 
+3       1.433081     1.137174     0.030878     00:03 
+4       1.349961     1.060559     0.114889     00:03 
+5       1.260490     0.937396     0.180179     00:03 
+6       1.169536     0.998160     0.174759     00:04 
+7       1.097816     0.929107     0.208315     00:03 
+8       1.042755     0.821408     0.230876     00:03 
+9       0.987962     0.840447     0.297297     00:03 
+epoch   train_loss   valid_loss   COCOMetric   time  
+------  -----------  -----------  -----------  ------
+0       0.629509     0.715716     0.325585     00:04 
+1       0.599518     0.684150     0.382239     00:03 
+2       0.585920     0.631303     0.480204     00:04 
+3       0.554550     0.615111     0.516641     00:04 
+4       0.539868     0.622383     0.459974     00:04 
+5       0.521756     0.609013     0.556388     00:04 
+6       0.498118     0.491549     0.611895     00:04 
+7       0.477656     0.469396     0.685497     00:04 
+8       0.459495     0.407668     0.713956     00:04 
+9       0.446206     0.383890     0.729540     00:04 </code></pre>
+<p>Predictions:</p>
+<pre><code># Inference
+# DataLoader
+infer_dl = efficientdet_infer_dl(valid_ds, batch_size=8)
+# Predict
+res &lt;- efficientdet_predict_dl(model, infer_dl)
+
+show_preds(
+  res,
+  c(10,20,25,12,16),
+  class_map=class_map,
+  denormalize_fn=denormalize_imagenet(),
+  ncols=5,
+  figsize=c(19,10)
+)</code></pre>
+<p align="center">
+<img src="files/output.jpg" height="300" align="center" alt="Detection"></p>
+</div>
 <div id="kaggle-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#kaggle-1" class="anchor"></a>Kaggle</h2>
@@ -1783,7 +1885,7 @@ coco_tdl %&gt;% show_batch(dpi = 200)</code></pre>
 <p align="center">
 <img src="files/kaggle.png" height="400" align="center" alt="Annotation"></p>
 <p>Let’s participate in a <code>Titanic</code> competition:</p>
-<pre><code><a href="https://github.com/henry090/fastai">library(fastai)
+<pre><code><a href="https://github.com/EagerAI/fastai">library(fastai)
 library(magrittr)
 
 com_nm = 'titanic'
@@ -1893,9 +1995,9 @@ Successfully submitted to Titanic: Machine Learning from Disaster</code></pre>
 <ul class="list-unstyled">
 <li>Download from CRAN at <br><a href="https://cloud.r-project.org/package=fastai">https://​cloud.r-project.org/​package=fastai</a>
 </li>
-<li>Browse source code at <br><a href="https://github.com/henry090/fastai/">https://​github.com/​henry090/​fastai/​</a>
+<li>Browse source code at <br><a href="https://github.com/EagerAI/fastai/">https://​github.com/​EagerAI/​fastai/​</a>
 </li>
-<li>Report a bug at <br><a href="https://github.com/henry090/fastai/issues">https://​github.com/​henry090/​fastai/​issues</a>
+<li>Report a bug at <br><a href="https://github.com/EagerAI/fastai/issues">https://​github.com/​EagerAI/​fastai/​issues</a>
 </li>
 </ul>
 </div>
