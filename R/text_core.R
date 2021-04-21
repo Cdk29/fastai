@@ -320,7 +320,7 @@ tokenize_csv <- function(fname, text_cols, outname = NULL, n_workers = 4,
 #' @export
 tokenize_df <- function(df, text_cols, n_workers = 6, rules = NULL,
                         mark_fields = NULL, tok = NULL,
-                        res_col_name = "text") {
+                        tok_text_col = "text") {
 
   args <-list(
     df = df,
