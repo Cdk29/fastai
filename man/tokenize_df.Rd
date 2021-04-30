@@ -11,7 +11,7 @@ tokenize_df(
   rules = NULL,
   mark_fields = NULL,
   tok = NULL,
-  res_col_name = "text"
+  tok_text_col = "text"
 )
 }
 \arguments{
