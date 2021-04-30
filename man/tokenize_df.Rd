@@ -27,7 +27,7 @@ tokenize_df(
 
 \item{tok}{tokenizer}
 
-\item{res_col_name}{res_col_name}
+\item{tok_text_col}{tok_text_col}
 }
 \value{
 None
